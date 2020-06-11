@@ -8,7 +8,7 @@ coef_divisor = []
 coef_dividendo = []
 coef_final = []
 sistema = []
-
+alfabeto = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 for x in range(o_divisor+1):
     coef_divisor.append(float(input("Insira o #{} coeficiente do divisor : ".format(x+1))))
 
@@ -29,11 +29,21 @@ for x in range(o_dividendo+1):
 print(sistema)
 
 def organizaSistema(coefs):
+    i=0
+    z=0
     for x in range(len(sistema)):
         if(x<len(coef_final)):
-            for y in range(len(coef_final)):
-                for z in coef_final[y]:
-                    sistema[x+y][x] = z
+            
+            for y in range(len(coef_final[0])):    
+                sistema[x][y+i] = coef_final[x][y]
+            i=i+1
+        else:
+            
+            while(z<=o_resto):
+                print(z)
+                sistema[-o_resto - z][-o_resto - z] = 1 
+                z=z+1
+            
     print(sistema)
 
 
@@ -41,15 +51,23 @@ def organizaSistema(coefs):
 def resolveSistema():
     a = np.array(sistema)
     A = a.transpose()
-    B = np.array(coef_dividendo) 
-    return np.linalg.inv(A).dot(B)
+    B = np.array(coef_dividendo)
+    i = 0
+    solucao = np.linalg.inv(A).dot(B)
+    print('Os coeficientes são :')
+    print('----------------')  
+    for x in solucao:
+        print("{} = {}".format(alfabeto[i],x)) 
+        i=i+1
+    print('----------------')
+    return solucao
 
 print(coef_dividendo)
 print(coef_divisor)
 print(coef_final)
-print(len(coef_final))
-print(len(sistema))
 organizaSistema(coef_final)
+print(resolveSistema())
+
 #print(resolveSistema())
 
 #print(---------------------)
